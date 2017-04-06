@@ -1,0 +1,84 @@
+<meta name="viewpoint" content="width=device-width,initial-scale=1.0" charset="UTF-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="../css/main.css" rel="stylesheet"/>
+<script src="../js/jquery-1.9.1.js"></script>
+
+<div id="reportTableDiv" class="well" style="border:3px solid #337ab7;background-color:#eee">
+	<table id="reserveInfoTable" data-classes="table table-no-bordered">
+		<thead>
+		 	<tr>
+		 		<th data-field="state" data-checkbox=true></th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="oid">编号</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="ename">考试名称</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="estart">开考时间</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="eend">结束时间</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="sname">考生</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="reservetime">预约时间</th>
+		 		<th data-formatter="formatStatus" data-align="center"data-valign="middle" data-sortable=true data-field="outofdate">状态</th>
+		 	</tr>
+		</thead>
+	</table>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/ajaxfileupload.js"></script>
+<script>
+	$(function(){
+		$('#reserveInfoTable').bootstrapTable({
+			//colomns:columns, 
+			url: "../reserve.action?op=allOutOfDate",
+					
+			paginationLoop: false,		
+			checkboxHeader: true,
+			uniqueId: "oid",
+			undefinedText: "未填",
+			
+			cache: false,
+			height: 480,
+			striped: true,
+			pagination: true,
+			pageSize: 20,
+			pageNumber:1,
+			pageList: [10, 20, 50, 100, 200, 500],
+			search: true,
+			showColumns: true,
+			showRefresh: true,
+			showToggle: true,
+			clickToSelect: true,
+			sidePagination: "client",
+			
+			formatNoMatches: function(){
+	         	return '无符合条件的记录';
+	        }
+		});
+		
+		$("#cancel").click(function(){
+			var rows = $("#reserveInfoTable").bootstrapTable('getSelections');
+			
+			var eids="";
+			for(var i=0;i<rows.length-1;i++){
+				eids+=rows[i].eid+",";
+			}
+			eids+=rows[i].eid;
+			$.post("../reserve.action",{op:"cancel",eids:eids},function(data){
+				if(data=="0"){
+					alert("取消失败");
+				}else{
+					alert("取消成功");
+					$("#reserveInfoTable").bootstrapTable('refresh', {url: '../reserve.action?op=allOutOfDate'});
+				}
+			});		
+		});
+	});
+	//考试状态 
+	function formatStatus(value,row,index){
+		if(value==true){
+			return "已考";
+		}else{
+			return "未考";
+		}
+	};
+</script>

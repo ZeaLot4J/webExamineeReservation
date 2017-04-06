@@ -1,0 +1,122 @@
+﻿		<div class="row-fluid">
+			<div class="col-md-12">
+				<address style="color:while;text-align:center;margin-top:60px;">
+					<small>Copyright &copy; 计科1401 ZeaLot All Rights Reserved</small><br>
+				</address>
+			</div>
+		</div>
+		
+	</div>
+<!--弹出登录模态框-->	
+<div class="modal fade" id="login_modal" data-keyboard="false">
+	<div class="modal-dialog">
+		<div class="modal-content" >
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title" style="text-align:center"><label for="inputName">切换用户</label></h3>
+			</div>
+			<div class="modal-body">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs center-block">
+					<li role="presentation" class="active">
+						<a href="#stuLogin" data-toggle="tab">学生</a>
+					</li>
+					<li role="presentation">
+						<a href="#adminLogin" data-toggle="tab">管理员</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active in fade" id="stuLogin">
+						<form id="stuform" class="form-horizontal">
+							<div class="form-group">
+							</div>
+							<div class="form-group">
+								<label for="sno" class="col-md-2 control-label"><span class="glyphicon glyphicon-user"></span></label>
+								<div class="col-md-10">
+									<input type="text" class="form-control input-lg" name="sno" id="sno" placeholder="请输入学号">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="spwd" class="col-md-2 control-label"><span class="glyphicon glyphicon-lock"></span></label>
+								<div class="col-md-10">
+									<input type="password" class="form-control input-lg" name="spwd" id="spwd" placeholder="请输入密码">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="verifycode" class="col-md-2 control-label"><span class="glyphicon glyphicon-pencil"></span></label>
+								<div class="col-md-10">
+									<div class="input-group">
+										<input type="text" class="form-control input-lg" name="verifycode" id="stuverifycode" placeholder="请输入验证码">
+										<span class="input-group-addon"><img class="responsive" id="stuverifyimg" src="" style="width:140px;height:32px;" alt="验证码"/></span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-offset-2">
+									<div class="checkbox">
+										<label><input id="autologin" name="stuautologin" type="checkbox">&nbsp;自动登录</label>
+										<a href="javascript:" style="margin-left:270px">忘记密码?</a>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-8 col-md-offset-2">
+									<div id="stualertinfo"></div>
+									<button type="button" id="stubtn" class="btn btn-danger btn-lg btn-block">立即登录&nbsp;<span class="glyphicon glyphicon-log-in"></span></button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div role="tabpanel" class="tab-pane fade" id="adminLogin">
+						<form id="adminform" class="form-horizontal">
+							<div class="form-group">
+							</div>
+							<div class="form-group">
+								<label for="aname" class="col-md-2 control-label"><span class="glyphicon glyphicon-user"></span></label>
+								<div class="col-md-10">
+									<input type="text" class="form-control input-lg" name="aname" id="aname" placeholder="请输入用户名">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="apwd" class="col-md-2 control-label"><span class="glyphicon glyphicon-lock"></span></label>
+								<div class="col-md-10">
+									<input type="password" class="form-control input-lg" name="apwd" id="apwd" placeholder="请输入密码">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="verifycode" class="col-md-2 control-label"><span class="glyphicon glyphicon-pencil"></span></label>
+								<div class="col-md-10">
+									<div class="input-group">
+										<input type="text" class="form-control input-lg" name="verifycode" id="adminverifycode" placeholder="请输入验证码">
+										<span class="input-group-addon"><img class="responsive" id="adminverifyimg" src="" style="width:140px;height:32px;" alt="验证码"/></span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-offset-2">
+									<div class="checkbox">
+										<label><input id="adminautologin" name="autologin" type="checkbox">&nbsp;自动登录</label>
+										<a href="javascript:" style="margin-left:270px">忘记密码?</a>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-8 col-md-offset-2">
+									<div id="adminalertinfo"></div>
+									<button type="button" id="adminbtn" class="btn btn-danger btn-lg btn-block">立即登录&nbsp;<span class="glyphicon glyphicon-log-in"></span></button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/common.js"></script>
+</body>	
+</html>

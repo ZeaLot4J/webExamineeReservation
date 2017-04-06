@@ -1,0 +1,51 @@
+<meta name="viewpoint" content="width=device-width,initial-scale=1.0" charset="UTF-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="../css/main.css" rel="stylesheet"/>
+<script src="../js/jquery-1.9.1.js"></script>
+<!-- bootstrap table使用注意事项，数据用url加载，field要写在标签里，否则没用 -->
+<div id="reportTableDiv" class="well" style="border:3px solid #337ab7;background-color:#eee">
+	<table id="adminInfoTable" >
+		<thead>
+		 	<tr>
+		 		<th data-field="state" data-checkbox=true></th>
+		 		<th data-align="center"data-valig="middle" data-sortable=true data-field="aname">管理员用户名</th>
+		 	</tr>
+		</thead>
+	</table>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/ajaxfileupload.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$('#adminInfoTable').bootstrapTable({
+			url: "../admin.action?op=all",
+					
+			
+			paginationLoop: false,		
+			checkboxHeader: true,
+			uniqueId: "aname",
+			undefinedText: "未填",
+			cache: false,
+			height: 480,
+			striped: true,
+			pagination: true,
+			pageSize: 20,
+			pageNumber:1,
+			pageList: [10, 20, 50, 100, 200, 500],
+			search: true,
+			showColumns: true,
+			showRefresh: true,
+			showToggle: true,
+			clickToSelect: true,
+			sidePagination: "client",
+	        formatNoMatches: function(){
+	         	return '无符合条件的记录';
+	        }
+		});
+	});
+</script>

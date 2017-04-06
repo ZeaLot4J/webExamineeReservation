@@ -1,0 +1,82 @@
+﻿<meta name="viewpoint" content="width=device-width,initial-scale=1.0" charset="UTF-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="../css/main.css" rel="stylesheet"/>
+<script src="../js/jquery-1.9.1.js"></script>
+
+<div id="reportTableDiv" class="well" style="border:3px solid #d9534f;background-color:#eee">
+	<table id="messageInfoTable" data-toolbar="#myToolbar" data-classes="table table-no-bordered">	
+		<thead>
+		 	<tr>
+		 		<th data-field="state" data-checkbox=true></th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="mid">编号</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="sendtime">发送时间</th>
+		 		<th data-formatter="formatStatus" data-align="center"data-valign="middle" data-sortable=true data-field="isnew">状态</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="content">内容</th>
+		 	</tr>
+		</thead>
+	</table>
+</div>
+<div id="myToolbar" class="btn-toolbar">
+	<div class="btn-group">
+		<button id="hasRead" type="button" class="btn btn-danger btn-md">标为已读</button>
+	</div>
+</div>	
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/ajaxfileupload.js"></script>
+<script>
+	$(function(){
+		$('#messageInfoTable').bootstrapTable({
+			//colomns:columns, 
+			
+			url: "../message.action?op=stuReceive",
+					
+			paginationLoop: false,		
+			checkboxHeader: true,
+			uniqueId: "mid",
+			undefinedText: "未填",
+			
+			cache: false,
+			height: 480,
+			striped: true,
+			pagination: true,
+			pageSize: 20,
+			pageNumber:1,
+			pageList: [10, 20, 50, 100, 200, 500],
+			search: true,
+			showColumns: true,
+			showRefresh: true,
+			showToggle: true,
+			clickToSelect: true,
+			sidePagination: "client",
+			
+			
+			formatNoMatches: function(){
+	         	return '无符合条件的记录';
+	        }
+		});
+		$("#hasRead").click(function(){
+			$.ajax({
+				url: "../message.action?op=stuHasRead",
+				type: "GET",
+				dataType: "JSON",
+				success: function(data){
+					if(data.code==1){
+						$("#messageInfoTable").bootstrapTable('refresh', {url: '../message.action?op=stuReceive'});
+					}
+				}
+			});
+		});
+	});
+	//消息状态 
+	function formatStatus(value,row,index){
+		if(value==true){
+			return "最新";
+		}else{
+			return "已读";
+		}
+	};
+</script>

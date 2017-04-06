@@ -1,0 +1,80 @@
+<meta name="viewpoint" content="width=device-width,initial-scale=1.0" charset="UTF-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="../css/main.css" rel="stylesheet"/>
+<script src="../js/jquery-1.9.1.js"></script>
+
+<div class="col-md-4"></div>
+	<div class="col-md-4">
+		<form role="form">
+			<div class="form-group">
+				<label for="certainStu">接收者学号：</label><input type="text" id="certainStu" class="form-control">
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+		        	<label>
+		        	  	<input id="notifyAll" type="checkbox"> 通知所有学生
+		        	</label>
+		      	</div>
+			</div>
+			<div class="form-group">
+				<textarea id="sendingMessage" class="form-control " rows="10"></textarea>
+			</div>
+			<div class="form-group">
+				<button id="send" type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-ok"></span></button>
+				<button id="clear" type="button" class="btn btn-primary btn-lg block-center"><span class="glyphicon glyphicon-trash"></span></button>
+			</div>
+		</form>
+	</div>
+<div class="col-md-4"></div>	
+		
+
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/common.js"></script>
+<script>
+	$(function(){
+		$("#notifyAll").click(function(){
+			if($("#notifyAll").prop('checked')){
+				$("#certainStu").prop('disabled',true);
+			}else{
+				$("#certainStu").prop('disabled',false);
+			}	
+		});
+		$("#clear").click(function(){
+			$("#sendingMessage").val("");
+		});
+		
+		$("#send").click(function(){
+			var sendingMessage = $("#sendingMessage").val();
+			if(sendingMessage==""){
+				return;
+			}
+			var url = "../message.action";
+			if($("#notifyAll").prop('checked')){//如果是群发
+				url += "?op=multiSend"; 
+			}else{
+				var sno = $("#certainStu").val();
+				if(sno==""){
+					return;					
+				}
+				url += "?sno="+sno+"&op=singleSend";
+			}
+			$.ajax({
+				url: url,
+				type: "POST",
+				dataType: "JSON",
+				data: "content="+sendingMessage,
+				success: function(data){
+					if(data.code==1){//发送成功
+						alert("发送成功");
+					}else{
+						alert("发送失败");
+					}
+				}
+			});
+		});
+	});
+	
+</script>

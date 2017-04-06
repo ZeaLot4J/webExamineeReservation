@@ -1,0 +1,39 @@
+<meta name="viewpoint" content="width=device-width,initial-scale=1.0" charset="UTF-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="../css/main.css" rel="stylesheet"/>
+<script src="../js/jquery-1.9.1.js"></script>
+<!-- bootstrap table使用注意事项，数据用url加载，field要写在标签里，否则没用 -->
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs">
+		<a></a><!--这里会莫名其妙地生成一个a标签-->
+		<li role="presentation" class="active">
+			<a href="#allMessage" aria-controls="home" role="tab" data-toggle="tab">全部</a>
+		</li>
+		<li role="presentation">
+			<a href="#newMessage" aria-controls="profile" role="tab" data-toggle="tab">未读</a>
+		</li>
+		<li role="presentation">
+			<a href="#datedMessage" aria-controls="messages" role="tab" data-toggle="tab">已读</a>
+		</li>
+		<li role="presentation">
+			<a href="#sendFeedback" aria-controls="messages" role="tab" data-toggle="tab">投诉反馈</a>
+		</li>
+	</ul>
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="allMessage">...</div>
+		<div role="tabpanel" class="tab-pane" id="newMessage">...</div>
+		<div role="tabpanel" class="tab-pane" id="datedMessage">...</div>
+		<div role="tabpanel" class="tab-pane" id="sendFeedback">...</div>
+	</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/ajaxfileupload.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		
+	});
+</script>

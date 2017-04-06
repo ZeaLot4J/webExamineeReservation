@@ -1,0 +1,107 @@
+<meta name="viewpoint" content="width=device-width,initial-scale=1.0" charset="UTF-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="../css/main.css" rel="stylesheet"/>
+<script src="../js/jquery-1.9.1.js"></script>
+<!-- bootstrap table使用注意事项，数据用url加载，field要写在标签里，否则没用 -->
+<div id="reportTableDiv" class="well" style="border:3px solid #337ab7;background-color:#eee">
+	<table id="stuInfoTable" data-toolbar="#myToolbar" data-classes="table table-no-bordered">
+		<thead>
+		 	<tr>
+		 		<th data-field="state" data-checkbox=true></th>
+		 		<th data-formatter="formatPic" data-align="center"data-valign="middle" data-sortable=true data-field="savator">头像</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="sno">学号</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="sname">姓名</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="ssex">性别</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="sidentity">身份证</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="stel">电话</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="semail">邮箱</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="sunivsersity">学校</th>
+		 		<th data-align="center"data-valign="middle" data-sortable=true data-field="sbirth">出生日期</th>
+		 	</tr>
+		</thead>
+	</table>
+</div>
+<div id="myToolbar" class="btn-toolbar">
+	<div class="btn-group">
+		<button id="import" type="button" class="btn btn-primary btn-lg">导入</button>
+	</div>
+	<div class="btn-group">
+		<input id="excel" name="excel" type="file" class="input-lg" style="border:3px solid #337ab7;background-color:white">
+	</div>
+</div>	
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/ajaxfileupload.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$('#stuInfoTable').bootstrapTable({
+			//colomns:columns, 
+			
+			url: "../student.action?op=all",
+					
+			paginationLoop: false,		
+			checkboxHeader: true,
+			uniqueId: "sno",
+			undefinedText: "未填",
+			
+			cache: false,
+			height: 480,
+			striped: true,
+			pagination: true,
+			pageSize: 20,
+			pageNumber:1,
+			pageList: [10, 20, 50, 100, 200, 500],
+			search: true,
+			showColumns: true,
+			showRefresh: true,
+			showToggle: true,
+			clickToSelect: true,
+			sidePagination: "client",
+			
+			
+			formatNoMatches: function(){
+	         	return '无符合条件的记录';
+	        }
+		});
+		
+		$("#import").click(function(){	
+			if($("#excel").val()==""){
+				return;
+			}
+			
+			$.ajaxFileUpload({
+				url:"../import.action?op=importStuInfo",
+				secureuri:false,
+				fileElementId:"excel",
+				dataType:"json",
+				success:function(data,status){
+					data = $.trim(data);
+					if(data=="0"){
+						alert("导入失败，学号重复或格式错误");
+					}else{
+						alert("导入成功");
+						$("#stuInfoTable").bootstrapTable('refresh', {url: '../student.action?op=all'});
+					}
+				},
+				error:function(data,status,e){
+					alert(e);
+				}
+			});
+		});
+	});
+	
+	//在表格中显示图片
+	function formatPic(value,row,index){//value为字段值，row为此行所代表的对象，index为行号
+		var picStr="";
+		if(value!=""){
+			picStr+="<img src='../"+value+"' width='50px' height='50px' />";
+		}else{
+			picStr+="<img src='../../ERimage/zanwu.jpg' width='50px' height='50px' />";
+		}
+		return picStr;
+	}
+</script>

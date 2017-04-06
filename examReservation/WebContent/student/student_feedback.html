@@ -1,0 +1,48 @@
+﻿<meta name="viewpoint" content="width=device-width,initial-scale=1.0" charset="UTF-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="../css/main.css" rel="stylesheet"/>
+<script src="../js/jquery-1.9.1.js"></script>
+
+<h4 class="text-danger">&nbsp;&nbsp;请将您的改进建议发送给我们，我们将尽最大努力改进</h4>
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
+		<form role="form">
+			<textarea id="sendingMessage" class="form-control " rows="15	"></textarea>
+			<button id="send" type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-ok"></span></button>
+			<button id="clear" type="button" class="btn btn-danger btn-lg block-center"><span class="glyphicon glyphicon-trash"></span></button>
+		</form>
+	</div>
+	<div class="col-md-4"></div>
+
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/ajaxfileupload.js"></script>
+<script>
+	$(function(){
+		$("#clear").click(function(){
+			$("#sendingMessage").val("");
+		});
+		$("#send").click(function(){
+			var sendingMessage = $("#sendingMessage").val();
+			if(sendingMessage==""){
+				return;
+			}
+			$.ajax({
+				url: "../message.action",
+				type: "POST",
+				dataType: "JSON",
+				data: "content="+sendingMessage+"&op=stuSend",
+				success: function(data){
+					if(data.code==1){//发送成功
+						alert("发送成功");
+					}else if(data.code==0){
+						alert("发送失败");
+					}
+				}
+			});
+		});
+	})
+</script>
